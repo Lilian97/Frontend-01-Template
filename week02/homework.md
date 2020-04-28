@@ -14,7 +14,7 @@
 function utf8Encoding(str){
 	let arr = [];
     for (let i = 0; i < str.length; i++) {
-      let code = str.CodePointAt(i);
+      let code = str.codePointAt(i);
       if ( code >= 0x00 && code <= 0x7f) {
         list.push(code);
       } else if (code >= 0x80 && code <= 0x7ff) {
