@@ -60,7 +60,6 @@ function convertStringToNumber(string, radix){
 	}
 }
 
-//convertStringToNumber('100',8);
 ```
 
 
@@ -70,7 +69,6 @@ function convertStringToNumber(string, radix){
 ##### 2、写一个Number转String的函数convertNumberToString
 
 ```
-
 
 function convertNumberToString(number, radix) {
   let integer = Math.floor(number);
@@ -100,3 +98,13 @@ function convertNumberToString(number, radix) {
 
 
 ##### 3、总结JavaScript中的特殊对象
+
+- Function Object
+  - [[call]]
+- Array Object
+  - 长度会跟着最大的下表变化
+- Arguments Object
+  - 与function分不开
+  - 不能显示创建
+  - 函数开始才可用
+
