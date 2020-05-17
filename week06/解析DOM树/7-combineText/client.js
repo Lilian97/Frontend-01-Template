@@ -1,4 +1,6 @@
 const net = require('net');
+const parser = require('./parser.js');
+
 class Request{
     // method, url = host + port + path;
     // body: k/v
@@ -231,5 +233,5 @@ void async function(){
     })
 
     let response = await request.send();
-    console.log(response);
+    let dom = parser.parserHTML(response.body);
 }()

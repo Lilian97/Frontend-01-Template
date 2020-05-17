@@ -231,3 +231,36 @@ function foundB2(c){
 match("aabcabx");
 ```
 
+
+
+浏览器：当输入URL按下回车时发生了什么？
+
+![image-20200517195713328](C:\Users\panliMa\AppData\Roaming\Typora\typora-user-images\image-20200517195713328.png)
+
+
+
+
+
+#### HTML的解析
+
+- 第一步：拆分文件
+  - 为了方便文件管理，我们把parser单独拆到文件中
+  - parser接受HTML文本作为参数，返回一棵DOM树
+  - 参考解析DOM树中的1-splitFile
+- 第二步：创建状态机
+  - 我们用FSM来实现HTML的分析
+  - 在HTML标准中，已经规定了HTML的状态
+  - Toy-Browser只挑选其中一部分状态，完成一个最简版本
+  - 参考解析DOM树中的2-initFSM
+- 第三步：解析标签
+  - 主要的标签有：开始标签、结束标签和自封闭标签
+  - 在这一步我们暂时忽略属性
+  - 参考解析DOM树中的3-ParserTag
+- 第四步：创建元素
+  - 在状态机中，除了状态迁移，我们还会加入业务逻辑
+  - 我们在标签结束状态提交标签token
+  - 参考解析DOM树中的4-emitToken
+- 第五步：处理属性
+  - 参考解析DOM树中的5-attribute
+- 第六步
+- 第七步
