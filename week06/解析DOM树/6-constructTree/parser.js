@@ -7,10 +7,12 @@ let stack = [{
 }];
 
 function emit(token){
+    
     if(token.type === "text")
         return;
+    console.log(token.tagName);
     let top = stack[stack.length-1];
-
+    // console.log(top);
     if(token.type == "startTag"){
         let element = {
             type: "element",
@@ -19,6 +21,7 @@ function emit(token){
         };
 
         element.tagName = token.tagName;
+
         for(let p in token){
             if(p != "type" && p != "tagName")
             element.attributes.push({
@@ -29,13 +32,14 @@ function emit(token){
 
         top.children.push(element);
         element.parent = top;
-
+        // console.log(top);
         if(!token.isSelfClosing)
             stack.push(element);
         
         currentTextNode = null;
     } else if(token.type == "endTag"){
-        if(top.tagName !=token.tagName){
+        // console.log(top);
+        if(top.tagName != token.tagName){
             throw new Error("Tag start end doesn't match!");
         } else {
             stack.pop();
