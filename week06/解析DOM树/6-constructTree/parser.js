@@ -10,9 +10,9 @@ function emit(token){
     
     if(token.type === "text")
         return;
-    console.log(token.tagName);
+    // console.log(token.tagName);
     let top = stack[stack.length-1];
-    // console.log(top);
+
     if(token.type == "startTag"){
         let element = {
             type: "element",
@@ -32,13 +32,14 @@ function emit(token){
 
         top.children.push(element);
         element.parent = top;
-        // console.log(top);
+        
         if(!token.isSelfClosing)
             stack.push(element);
         
         currentTextNode = null;
+
     } else if(token.type == "endTag"){
-        // console.log(top);
+       
         if(top.tagName != token.tagName){
             throw new Error("Tag start end doesn't match!");
         } else {
@@ -106,7 +107,7 @@ function beforeAttributeName(c){
     if(c.match(/^[\t\n\f ]$/)){
         return beforeAttributeName;
     } else if(c == ">" || c == "/" || c == EOF){
-        return afterAttributeName;
+        return afterAttributeName(c);
     } else if(c == "="){
         
     } else {
@@ -114,11 +115,11 @@ function beforeAttributeName(c){
             name : "",
             value : ""
         }
-        return attrinbuteName(c);
+        return attributeName(c);
     }
 }
 
-function attrinbuteName(c){
+function attributeName(c){
     if(c.match(/^[\t\n\f ]$/) || c == ">" || c == "/" || c == EOF){
         return afterAttributeName(c);
     } else if(c == "="){
@@ -129,7 +130,7 @@ function attrinbuteName(c){
 
     } else{
         currentAttribute.name += c;
-        return attrinbuteName;
+        return attributeName;
     }
 }
 
@@ -262,7 +263,7 @@ function afterAttributeName(c){
             name : "",
             value : ""
         };
-        return attrinbuteName;
+        return attributeName(c);
     }
 }
 
@@ -273,4 +274,5 @@ module.exports.parserHTML = function parserHTML(html){
         state = state(c);
     }
     state = state(EOF);
+    console.log(stack[0]);
 }

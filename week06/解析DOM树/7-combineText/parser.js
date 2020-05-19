@@ -9,7 +9,7 @@ let currentTextNode = null;
 
 function emit(token){
     let top = stack[stack.length-1];
-
+    console.log(token.tagName);
     if(token.type == "startTag"){
         let element = {
             type: "element",
@@ -110,7 +110,7 @@ function beforeAttributeName(c){
     if(c.match(/^[\t\n\f ]$/)){
         return beforeAttributeName;
     } else if(c == ">" || c == "/" || c == EOF){
-        return afterAttributeName;
+        return afterAttributeName(c);
     } else if(c == "="){
         
     } else {
@@ -118,11 +118,11 @@ function beforeAttributeName(c){
             name : "",
             value : ""
         }
-        return attrinbuteName(c);
+        return attributeName(c);
     }
 }
 
-function attrinbuteName(c){
+function attributeName(c){
     if(c.match(/^[\t\n\f ]$/) || c == ">" || c == "/" || c == EOF){
         return afterAttributeName(c);
     } else if(c == "="){
@@ -133,7 +133,7 @@ function attrinbuteName(c){
 
     } else{
         currentAttribute.name += c;
-        return attrinbuteName;
+        return attributeName;
     }
 }
 
@@ -266,7 +266,7 @@ function afterAttributeName(c){
             name : "",
             value : ""
         };
-        return attrinbuteName;
+        return attributeName(c);
     }
 }
 
@@ -277,4 +277,5 @@ module.exports.parserHTML = function parserHTML(html){
         state = state(c);
     }
     state = state(EOF);
+    return stack[0];
 }
