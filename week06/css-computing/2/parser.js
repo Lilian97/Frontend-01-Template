@@ -27,7 +27,7 @@ function computeCSS(element){
 
 function emit(token){
     let top = stack[stack.length-1];
-    console.log(token.tagName);
+    // console.log(token.tagName);
     if(token.type == "startTag"){
         let element = {
             type: "element",
@@ -44,7 +44,7 @@ function emit(token){
             });
         }
 
-        computeCSS(element);
+        computeCSS(element);//这行的位置非常重要
 
         top.children.push(element);
 

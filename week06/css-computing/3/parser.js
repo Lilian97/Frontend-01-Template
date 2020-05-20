@@ -22,11 +22,12 @@ function addCSSRules(text){
 
 function computeCSS(element){
     var elements = stack.slice().reverse();
+    console.log(elements)
 }
 
 function emit(token){
     let top = stack[stack.length-1];
-    console.log(token.tagName);
+    // console.log(token.tagName);
     if(token.type == "startTag"){
         let element = {
             type: "element",
