@@ -22,7 +22,7 @@ function addCSSRules(text){
 
 function computeCSS(element){
     var elements = stack.slice().reverse();
-    console.log(elements)
+    // console.log(elements)
 }
 
 function emit(token){
