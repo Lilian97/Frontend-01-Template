@@ -21,6 +21,8 @@ function addCSSRules(text){
 }
 
 function match(element, selector){
+    // console.log("selector",selector)
+    console.log("element",element)
     if(!selector || !element.attributes)
         return false;
     
@@ -54,7 +56,7 @@ function computeCSS(element){
             continue;
         
 
-        // let matched = false;
+        let matched = false;
 
         var j = 1;
         for(var i = 0; i < elements.length; i++){

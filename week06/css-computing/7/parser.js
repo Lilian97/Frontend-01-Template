@@ -41,7 +41,7 @@ function match(element, selector){
 }
 
 function specificity(selector){
-    var p = [0, 0, 0, 0];
+    var p = [0, 0, 0, 0];       //左边是高位
     var selectorParts = selector.split(" ");
     for(var part of selectorParts){
         if(part.charAt(0) == "#"){
