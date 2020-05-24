@@ -1,14 +1,37 @@
 # 第七周总结
 
+#### 浏览器工作原理之排版
+
+第一步：明确主轴交叉轴等概念
+
+![image-20200524220158804](C:\Users\panliMa\AppData\Roaming\Typora\typora-user-images\image-20200524220158804.png)
+
+第二步：收集元素进行
+
+- 分行
+  - 根据主轴尺寸，把元素分进行
+  - 若设置了no-wrap，则强行分配进第一行
+
+![image-20200524220338841](C:\Users\panliMa\AppData\Roaming\Typora\typora-user-images\image-20200524220338841.png)
 
 
 
+第三步：计算主轴
 
+- 计算主轴方向
+  - 找出所有flex元素
+  - 把主轴方向的剩余尺寸按比例分配给这些元素
+  - 若剩余空间为负数，所有flex元素为0，等比压缩剩余元素
 
+![image-20200524220431538](C:\Users\panliMa\AppData\Roaming\Typora\typora-user-images\image-20200524220431538.png)
 
+第四步：计算交叉轴
 
+- 计算交叉轴方向
+  - 根据每一行中最大元素尺寸计算行高
+  - 根据行高flex-align和item-align，确定元素具体位置
 
-
+![image-20200524220521145](C:\Users\panliMa\AppData\Roaming\Typora\typora-user-images\image-20200524220521145.png)
 
 
 
