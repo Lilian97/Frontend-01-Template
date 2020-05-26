@@ -29,7 +29,7 @@
 
 - 计算交叉轴方向
   - 根据每一行中最大元素尺寸计算行高
-  - 根据行高flex-align和item-align，确定元素具体位置
+  - 根据align-content、items-content以及align-self ，确定元素具体位置
 
 ![image-20200524220521145](C:\Users\panliMa\AppData\Roaming\Typora\typora-user-images\image-20200524220521145.png)
 
@@ -68,7 +68,6 @@
 - css总体结构
   - @charset
   - @import
-  - stylesheet
   - rules
     - @media
     - @page
@@ -76,12 +75,27 @@
 
 第二步：css @ 规则的研究
 
-- 
+- At-rules
+  - @charset:https://www.w3.org/TR/css-syntax-3/
+  - @import:https://www.w3.org/TR/css-cascade-4/
+  - @media:https://www.w3.org/TR/css3-conditional/
+  - @page:https://www.w3.org/TR/css-page-3/
+  - @counter-style:https://www.w3.org/TR/css-counter-styles-3
+  - @keyframes:https://www.w3.org/TR/css-animations-1/
+  - @fontface:https://www.w3.org/TR/css-fonts-3/
+  - @supports:https://www.w3.org/TR/css3-conditional/
+  - @namespace:https://www.w3.org/TR/css-namespaces-3/
 
 第三步：CSS规则的结构
 
+- CSS规则
+  - Selector
+    - https://www.w3.org/TR/selectors-3/
+    - https://www.w3.org/TR/selectors-4/
+  - Key
+    - Properties
+    - Variables:https://www.w3.org/TR/css-variables/
+  - Value
+    - https://www.w3.org/TR/css-values-4/
+
 第四步：初步构建CSS知识体系
-
-第五步：
-
-第六步：
