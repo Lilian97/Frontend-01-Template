@@ -9,7 +9,7 @@ let currentTextNode = null;
 
 function emit(token){
     let top = stack[stack.length-1];
-    console.log(token.tagName);
+    // console.log(token.tagName);
     if(token.type == "startTag"){
         let element = {
             type: "element",
