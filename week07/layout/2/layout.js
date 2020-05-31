@@ -115,8 +115,10 @@ function layout(element){
         elementStyle[mainSize] = 0;
         for(var i = 0; i < items.length; i++){
             var item = items[i];
+            var itemStyle = getStyle(item);
             if(itemStyle[mainSize] !== null || itemStyle !==(void 0))
                 elementStyle[mainSize] = elementStyle[mainSize] + itemStyle[mainSize];
+                // 把子元素的mainSize累加到父元素的mainSize
         }
         isAutoMainSize = true;
     }
@@ -126,13 +128,13 @@ function layout(element){
     var flexLine = []
     var flexLines = [flexLine]
 
-    var mainSpace = elementStyle[mainSize]
+    var mainSpace = elementStyle[mainSize]//主轴剩余空间
     var crossSpace = 0;
 
     for(var i = 0; i < items.length; i++){
-        var item =items[i]
+        var item = items[i]
         var itemStyle = getStyle(item);    
-
+        // 元素的mainSize为null，就置为零
         if(itemStyle[mainSize] === null){
             itemStyle[mainSize] = 0;
         }
@@ -144,12 +146,13 @@ function layout(element){
             mainSpace -= itemStyle[mainSize];
             if(itemStyle[crossSize] !== null && itemStyle[crossSize] !== (void 0))
                 crossSpace = Math.max(crossSpace, itemStyle[crossSize]);
-            flexLine.push(item);
-        } else {
+            flexLine.push(item);//nowrap时，元素强行塞进第一行
+        } else {//元素的mainSize大于一行的mainSize时，把元素的mainSize缩到一行的mainSize
             if(itemStyle[mainSize] > style[mainSize]){
                 itemStyle[mainSize] = style[mainSize]
             }
             if(mainSpace < style[mainSize]){
+                //如果主轴剩余空间小于元素的mainSize,把主轴交叉轴的剩余空间存起来，把元素放进下一行
                 flexLine.mainSpace = mainSpace;
                 flexLine.crossSpace = crossSpace;
 
@@ -165,7 +168,9 @@ function layout(element){
                 flexLine.push(item);
             }
             if(itemStyle[crossSize] !== null && itemStyle[crossSize] !== (void 0))
+                // 一行的高度取决于这一行最高元素的高度
                 crossSpace = Math.max(crossSpace, itemStyle[crossSize])
+            // 剩余空间应减掉已经排进来的元素的mainSize
             mainSpace -= itemStyle[mainSize];
         }
     }

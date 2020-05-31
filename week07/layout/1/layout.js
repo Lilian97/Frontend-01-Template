@@ -41,6 +41,7 @@ function layout(element){
         }
     })
 
+    // 默认值
     if(!style.flexDirection || style.flexDirection === 'auto')
         style.flexDirection = 'row';
     if(!style.alignItems || style.alignItems === 'auto')
