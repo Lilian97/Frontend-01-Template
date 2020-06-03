@@ -76,9 +76,29 @@
 ##### 可用属性
 
 - first-line
-  - 
+  - font系列
+  - color系列
+  - background系列
+  - word-spacing
+  - letter-spacing
+  - text-decoration
+  - text-transform
+  - line-height
 - first-letter
-  - 
+  - font系列
+  - color系列
+  - background系列
+  - word-spacing
+  - letter-spacing
+  - text-decoration
+  - text-transform
+  - line-height
+  - float
+  - vertical-align
+  - 盒模型系列：margin、padding、border
+- 总结
+  - first-letter可以设置float，而first-line不可以，原因在于first-line设置float会脱离正常流，first-line就不再是第一行了。
+  - 字体会影响第一行的内容，但first-line却可以设置font相关属性，原因是，浏览器并非是先计算好哪些文字有first-line属性再去排版，而是在排版过程中，把first-line相关属性直接加在字体上，文字一个一个地渲染，当第一行排满无法继续容纳更多的字体，就会把下一个字的first-line伪类去掉，这样字体大小不会对first-line造成影响。
 
 
 
@@ -94,7 +114,16 @@
   - css选择器选中的是元素
   - css选择器选的是元素，在排版时可能产生多个盒
   - 排版和渲染的基本单位是盒
+  
 - 盒模型
+
+  - box-sizing
+    - content-box：只包含内容的宽度
+    - border-box：包含内容（content）和内边距（padding）的宽度
+
+  ​	
+
+![:](C:\Users\panliMa\AppData\Roaming\Typora\typora-user-images\image-20200603211947783.png)
 
 
 
@@ -106,6 +135,15 @@
   - 收集盒进行
   - 计算盒在行中的排布
   - 计算行的排布
+
+
+
+![image-20200603214233659](C:\Users\panliMa\AppData\Roaming\Typora\typora-user-images\image-20200603214233659.png)
+
+
+
+- 正常流的行模型（IFC）
+  - 
 
 
 
