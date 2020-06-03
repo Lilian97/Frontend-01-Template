@@ -143,13 +143,19 @@
 
 
 - 正常流的行模型（IFC）
-  - 
 
+  - vertical-align的属性值尽量用top、bottom、middle，避免使用text-bottom、text-top这类与文字相关的值
+  - 如果子元素的高度超过了line-height，对齐方式的行高以最高的子元素的高度为准；如果子元素高度小于line-height，对齐方式的行高以line-height为准。
 
+  
 
 - float与clear
 
 
 
 - margin折叠
+
+
+
+- BFC
 
