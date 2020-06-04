@@ -155,6 +155,8 @@
 
 - margin折叠
 
+  margin折叠只会发生在BFC里，不同的BFC之间不会发生margin折叠
+
 
 
 - BFC
