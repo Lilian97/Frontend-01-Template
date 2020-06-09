@@ -159,5 +159,14 @@
 
 
 
-- BFC
+- overflow:visible与BFC
+
+
+
+- Flex
+  - Flex排版
+    - 收集盒进行
+    - 计算盒在主轴方向的排布
+    - 计算盒在交叉轴方向的排布
+    - 具体参考toy-browser
 
