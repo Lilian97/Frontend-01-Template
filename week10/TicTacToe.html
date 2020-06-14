@@ -1,0 +1,132 @@
+<style>
+    #board{
+        width: 350px;
+    }
+    .cell{
+        width:100px;
+        height: 100px;
+        border:1px solid white;
+        background-color: green;
+        display: inline-block;
+        vertical-align: middle;
+
+        line-height: 100px;
+        font-size:50px;
+        text-align: center;
+    }
+</style>
+
+
+<div id="board"></div>
+
+<script>
+    let pattern = [
+        [2,0,0],
+        [0,1,0],
+        [0,0,0]
+    ]
+    let color = 1;
+
+    
+    // ❌⭕
+
+    function show(){
+        let board = document.getElementById("board");
+        board.innerHTML = "";
+
+        for(let i=0; i<3; i++){
+            for(let j=0;j<3; j++){
+                let cell = document.createElement("div")
+
+                cell.classList.add("cell");
+
+                cell.addEventListener("click",()=>move(j,i));
+
+                cell.innerText = 
+                    pattern[j][i] == 1?"⭕":
+                    pattern[j][i] == 2?"❌":
+                    "";
+
+                board.appendChild(cell);
+            }
+            board.appendChild(document.createElement("br"));
+        }
+    }
+
+    function move(x,y){
+        if(pattern[x][y] !== 0)
+            return;
+        pattern[x][y] = color;
+        if(check(pattern,color)){
+            alert(color == 2?"❌ is winner":"⭕ is winner")
+        }
+        color = 3 - color;
+        show();
+    }
+
+    function check(pattern,color,x,y){
+        // 代码相似，加上x, y抽象代码
+
+        // 判断行
+        for(let i = 0;i<3;i++){
+            let win = true;
+            for(let j=0; j<3; j++){
+                if(pattern[j][i] !== color){
+                    win = false;
+                    break;
+                }
+            }
+            if(win)
+                return true;
+        }
+
+        // 判断列
+        for(let i = 0;i<3;i++){
+            let win = true;
+            for(let j=0; j<3; j++){
+                if(pattern[i][j] !== color){
+                    win = false;
+                    break;
+                }
+            }
+            if(win)
+                return true;
+        }
+
+        // 判断斜对角
+        {
+            let win = true;
+            for(let j=0; j<3; j++){
+                if(pattern[j][j] !== color){
+                    win = false;
+                    break;
+                }
+            }
+            if(win)
+                return true;
+        }
+        // 另一斜对角
+        {
+            let win = true;
+            for(let j=0; j<3; j++){
+                if(pattern[j][2-j] !== color){
+                    win = false;
+                    break;
+                }
+            }
+            if(win)
+                return true;
+        }
+
+        return false;
+        
+    }
+
+    function willWin(){
+
+    }
+
+    show();
+
+    // console.log(pattern)
+</script>
