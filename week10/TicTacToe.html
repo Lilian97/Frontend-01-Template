@@ -62,8 +62,12 @@
         }
         color = 3 - color;
         show();
+        if(willWin(pattern,color)){
+            console.log(color ==2 ? "❌ will win!":"⭕ will win!")
+        }
     }
 
+    // 判断输赢
     function check(pattern,color,x,y){
         // 代码相似，加上x, y抽象代码
 
@@ -122,8 +126,32 @@
         
     }
 
-    function willWin(){
+    // 复制pattern
+    function clone(pattern){
+        return JSON.parse(JSON.stringify(pattern))
+    }
 
+    // 预判输赢
+    function willWin(pattern, color){
+        for(let i = 0;i<3;i++){
+            for(let j = 0; j<3;j++){
+                if(pattern[i][j] !== 0)
+                    continue;
+                let tmp = clone(pattern);
+                tmp[i][j] = color;
+                if(check(tmp,color)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    function bestChoice(pattern, color){
+        return {
+            point:[1,1],
+            result:-1,
+        }
     }
 
     show();
