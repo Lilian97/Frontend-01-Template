@@ -21,8 +21,8 @@
 
 <script>
     let pattern = [
-        [2,0,0],
-        [0,1,0],
+        [0,0,0],
+        [0,0,0],
         [0,0,0]
     ]
     let color = 1;
@@ -40,7 +40,7 @@
 
                 cell.classList.add("cell");
 
-                cell.addEventListener("click",()=>move(j,i));
+                cell.addEventListener("click",()=>userMove(j,i));
 
                 cell.innerText = 
                     pattern[j][i] == 1?"⭕":
@@ -53,7 +53,7 @@
         }
     }
 
-    function move(x,y){
+    function userMove(x,y){
         if(pattern[x][y] !== 0)
             return;
         pattern[x][y] = color;
@@ -62,9 +62,18 @@
         }
         color = 3 - color;
         show();
-        if(willWin(pattern,color)){
-            console.log(color ==2 ? "❌ will win!":"⭕ will win!")
+        computeMove();
+    }
+
+    function computeMove(){
+        let choice = bestChoice(pattern,color);
+        if(choice.point)
+            pattern[choice.point[1]][choice.point[0]] = color;
+        if(check(pattern,color)){
+            alert(color == 2?"❌ is winner":"⭕ is winner")
         }
+        color = 3 - color;
+        show();
     }
 
     // 判断输赢
@@ -140,17 +149,67 @@
                 let tmp = clone(pattern);
                 tmp[i][j] = color;
                 if(check(tmp,color)){
-                    return true;
+                    return [j][i];
                 }
             }
         }
-        return false;
+        return null;
     }
 
+    let openings = new Map();
+
+    openings.set([
+        [0,0,0],
+        [0,0,0],
+        [0,0,0]
+    ].toString() + "1",{
+        point:[1,1],
+        result:0
+    })
+
+    openings.set([
+        [0,0,0],
+        [0,1,0],
+        [0,0,0]
+    ].toString() + "2",{
+        point:[0,0],
+        result:0
+    })
+
     function bestChoice(pattern, color){
+        
+        if(openings.has(pattern.toString() + color)){
+            return openings.get(pattern.toString() + color)
+        }
+
+        let point = willWin(pattern, color);
+        if(point){
+            return {
+                point:point,
+                result:1
+            }
+        }
+
+        let result = -1;
+        outer:for(let i = 0; i<3; i++){
+            for(let j = 0; j<3; j++){
+                if(pattern[i][j] !== 0)
+                    continue;
+                let tmp = clone(pattern);
+                tmp[i][j] = color;
+                let opp = bestChoice(tmp, 3-color)
+                if( -opp.result >= result){
+                    point = [j, i];
+                    result = -opp.result;
+                }
+                if (result === 1) 
+                    break outer;
+            }
+        }
+
         return {
-            point:[1,1],
-            result:-1,
+            point:point,
+            result:point?result:0
         }
     }
 
