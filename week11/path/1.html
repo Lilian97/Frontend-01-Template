@@ -52,7 +52,43 @@
     document.addEventListener("mouseup",()=>mouse = false)
     document.addEventListener("contentmenu",e=>e.preventDefault())
 
-    function path(map, start, end){
-        
+
+    function sleep(t){
+        return new Promise(function(resolve){
+            setTimeout(resolve, t);
+        });
+    }
+
+
+    async function path(map, start, end){
+        map = map.slice();//复制一份map，防止修改原有的map数组
+
+        let queue = [start];
+
+        async function insert([x,y]){
+            if(map[100 * y + x] !== 0)
+                return;
+            if(x<0 || y<0 || x>100 || y>100)
+                return;
+            map[100 * y + x] = 2;
+            container.children[y * 100 + x].style.backgroundColor = "lightgreen";
+            await sleep(5);
+            queue.push([x,y]);
+        }
+
+
+        while(queue.length){
+            let [x,y] = queue.shift();//pop、unshift或者push、shift
+            console.log(x,y);
+            if(x === end[0] && y === end[1])
+                return true;
+            await insert([x-1,y]);
+            await insert([x+1,y]);
+            await insert([x,y-1]);
+            await insert([x,y+1]);
+        }
+
+        return false;
+
     }
 </script>
