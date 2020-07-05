@@ -15,6 +15,21 @@
 
             node["$"] ++;
         }
+        most(){
+            let max = 0;
+            let maxWord = null;
+            let visit = (node, word) => {
+                if(node.$ && node.$>max){
+                    max = node.$;
+                    maxWord = word;
+                }
+                for(let p in node){
+                    visit(node[p], word + p);
+                }
+            }
+            visit(this.root,"");
+            console.log(maxWord);
+        }
     }
 
     function randomWord(length){
