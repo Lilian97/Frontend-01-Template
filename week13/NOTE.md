@@ -29,8 +29,6 @@
 
 
 
-![component.png](https://github.com/Lilian97/Frontend-01-Template/blob/master/week13/img/component.png)
-
 - Attribute
 
   - Attribute强调描述性
@@ -55,4 +53,7 @@
 
 
 
-![image-20200708223108574](C:\Users\panliMa\AppData\Roaming\Typora\typora-user-images\image-20200708223108574.png)
+![如何设计组件状态](https://github.com/Lilian97/Frontend-01-Template/tree/master/week13/img/如何设计组件状态.png)
+
+
+
