@@ -18,8 +18,8 @@
         let up = event => {
             // console.log(baseX,baseY);
             baseX = baseX + event.clientX - startX, baseY = baseY + event.clientY - startY;
-            document.addEventListener("mousemove", move);
-            document.addEventListener("mouseup", up);
+            document.removeEventListener("mousemove", move);
+            document.removeEventListener("mouseup", up);
         };
 
         document.addEventListener("mousemove", move);
