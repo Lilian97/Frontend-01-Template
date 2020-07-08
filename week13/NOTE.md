@@ -25,11 +25,11 @@
 
 
 
-![image-20200708221647562](C:\Users\panliMa\AppData\Roaming\Typora\typora-user-images\image-20200708221647562.png)
+![component.png](https://github.com/Lilian97/Frontend-01-Template/tree/master/week13/img/component.png)
 
 
 
-
+![component.png](https://github.com/Lilian97/Frontend-01-Template/blob/master/week13/img/component.png)
 
 - Attribute
 
