@@ -11,7 +11,7 @@
     文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 
     文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 
 </div>
-<div id="dragable" style="width: 100px;height: 100px;background-color: pink;"></div>
+<div id="dragable" style="width: 100px;height: 100px;background-color: pink;display: inline-block;"></div>
 
 
 <script>
@@ -23,8 +23,13 @@
         let startX = event.clientX, startY = event.clientY;
 
         let move = event => {
-            let x = baseX + event.clientX - startX, y = baseY + event.clientY - startY;
-            dragable.style.transform = `translate(${x}px, ${y}px)`;
+            // let x = baseX + event.clientX - startX, y = baseY + event.clientY - startY;
+            // dragable.style.transform = `translate(${x}px, ${y}px)`;
+
+            let range = nearest(event.clientX, event.clientY);
+            // console.log(range);
+            // range.deleteContent();
+            range.insertNode(dragable);
         };
         let up = event => {
             baseX = baseX + event.clientX - startX, baseY = baseY + event.clientY - startY;
@@ -61,6 +66,8 @@
         }
         return nearestRange;
     }
+
+    document.addEventListener("selectstart", event => event.preventDefault());
 
 
 </script>
