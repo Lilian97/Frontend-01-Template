@@ -51,4 +51,8 @@
   >
   > myComponent.a="value";
 
-  
+- 区分Attribute和Property
+
+
+
+![image-20200708223108574](C:\Users\panliMa\AppData\Roaming\Typora\typora-user-images\image-20200708223108574.png)
