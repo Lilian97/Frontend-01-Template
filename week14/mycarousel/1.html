@@ -13,6 +13,7 @@
                 width: 500px;
                 height: 300px;
                 display: inline-block;
+                transform: ease 0.5s;
             }
         </style>
     </head>
@@ -34,6 +35,46 @@
                         element.src = d;
                         this.root.appendChild(element);
                     }
+
+                    let position = 0;
+
+                    let nextPic = () =>{
+                        let nextPosition = (position + 1) % this.data.length;
+
+                        let current = this.root.childNodes[position];       //避免操作DOM，以免造成不可预知的bug
+                        let next = this.root.childNodes[nextPosition];  
+
+
+                        current.style.transition = `ease 0s`;     
+                        next.style.transition = `ease 0s`;     
+
+
+                        current.style.transform = `translateX(${-100 * position}%)`;
+                        next.style.transform = `translateX(${100 -100 * nextPosition}%)`;
+
+
+                        setTimeout(function(){                           
+                            current.style.transition = "";  //="" means use css rule;   
+                            next.style.transition = "";
+
+                            current.style.transform = `translateX(${-100 -100 * position}%)`;
+                            next.style.transform = `translateX(${-100 * nextPosition}%)`;
+
+                            position = nextPosition;
+                        },16)
+                        /*
+                            相当于两层requestAnimationFrame，第一层是上一帧，第二层是是当前帧
+                            requestAnimationFrame(function(){
+                                requestAnimationFrame(function(){
+
+                                })
+                            })
+                        */
+
+                        
+                        setTimeout(nextPic,3000);
+                    }
+                    nextPic();
                 }
             }
 
