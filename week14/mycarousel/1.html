@@ -7,8 +7,8 @@
                 height: 300px;
                 outline: 1px solid blue;
                 white-space: nowrap;
-                /* overflow: hidden; */
-                zoom:0.5;
+                overflow: hidden;
+                /* zoom:0.5; */
                 margin: auto;
             }
             .carousel>img {
@@ -106,6 +106,24 @@
                             // console.log(event.clientX - startX, event.clientY - startY);
                         };
                         let up = event => {
+                            let offset = 0;
+
+                            if(event.clientX - startX > 250){
+                                offset = 1;
+                            } else if(event.clientX - startX < -250){
+                                offset = -1;
+                            }
+
+                            current.style.transition = "";    // ="" means use css rules 
+                            last.style.transition = "";  
+                            next.style.transition = "";
+
+                            current.style.transform = `translateX(${offset -500 * position}px)`;        //动画结束
+                            last.style.transform = `translateX(${offset -500 - 500 * lastPosition}px)`;
+                            next.style.transform = `translateX(${offset + 500 - 500 * nextPosition}px)`;
+
+                            position = (position - offset + this.data.length) % this.data.length;
+
                             document.removeEventListener("mousemove", move);
                             document.removeEventListener("mouseup", up);
                         };
