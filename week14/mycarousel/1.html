@@ -7,13 +7,15 @@
                 height: 300px;
                 outline: 1px solid blue;
                 white-space: nowrap;
-                overflow: hidden;
+                /* overflow: hidden; */
+                zoom:0.5;
+                margin: auto;
             }
             .carousel>img {
                 width: 500px;
                 height: 300px;
                 display: inline-block;
-                transform: ease 0.5s;
+                transition: transform ease 1s;
             }
         </style>
     </head>
@@ -33,6 +35,7 @@
                     for(let d of this.data){
                         let element = document.createElement("img");
                         element.src = d;
+                        element.addEventListener("dragstart",e => e.preventDefault());      //禁止拖动img
                         this.root.appendChild(element);
                     }
 
@@ -44,12 +47,12 @@
                         let current = this.root.childNodes[position];       //避免操作DOM，以免造成不可预知的bug
                         let next = this.root.childNodes[nextPosition];  
 
-
-                        current.style.transition = `ease 0s`;     
+                        // 动画起始位置处不能有transition，需要去除
+                        current.style.transition = `ease 0s`;     //也可改为none，都是去掉动画效果
                         next.style.transition = `ease 0s`;     
 
 
-                        current.style.transform = `translateX(${-100 * position}%)`;
+                        current.style.transform = `translateX(${-100 * position}%)`;        //动画起始位置
                         next.style.transform = `translateX(${100 -100 * nextPosition}%)`;
 
 
@@ -57,11 +60,11 @@
                             current.style.transition = "";  //="" means use css rule;   
                             next.style.transition = "";
 
-                            current.style.transform = `translateX(${-100 -100 * position}%)`;
+                            current.style.transform = `translateX(${-100 -100 * position}%)`;   //动画结束位置
                             next.style.transform = `translateX(${-100 * nextPosition}%)`;
 
                             position = nextPosition;
-                        },16)
+                        },16)       //16毫秒正好一帧
                         /*
                             相当于两层requestAnimationFrame，第一层是上一帧，第二层是是当前帧
                             requestAnimationFrame(function(){
@@ -70,11 +73,45 @@
                                 })
                             })
                         */
-
                         
+                    
                         setTimeout(nextPic,3000);
                     }
-                    nextPic();
+                    // setTimeout(nextPic,3000);
+                    this.root.addEventListener("mousedown", event => {
+                        let startX = event.clientX, startY = event.clientY;
+
+                        let lastPosition = (position - 1 + this.data.length) % this.data.length;
+                        let nextPosition = (position + 1) % this.data.length;
+
+                        let current = this.root.childNodes[position];       
+                        let last = this.root.childNodes[lastPosition];
+                        let next = this.root.childNodes[nextPosition];
+
+                        // 去除动画效果
+                        current.style.transition = `ease 0s`;     
+                        last.style.transition = `ease 0s`;  
+                        next.style.transition = `ease 0s`;  
+
+                        // 动画第一帧
+                        current.style.transform = `translateX(${-500 * position}px)`;        //动画起始位置
+                        last.style.transform = `translateX(${-500 - 500 * lastPosition}px)`;
+                        next.style.transform = `translateX(${500 - 500 * nextPosition}px)`;
+
+                        let move = event => {
+                            // 动画第二帧
+                            current.style.transform = `translateX(${event.clientX - startX -500 * position}px)`;        //动画起始位置
+                            last.style.transform = `translateX(${event.clientX - startX -500 - 500 * lastPosition}px)`;
+                            next.style.transform = `translateX(${event.clientX - startX + 500 - 500 * nextPosition}px)`;
+                            // console.log(event.clientX - startX, event.clientY - startY);
+                        };
+                        let up = event => {
+                            document.removeEventListener("mousemove", move);
+                            document.removeEventListener("mouseup", up);
+                        };
+                        document.addEventListener("mousemove", move);
+                        document.addEventListener("mouseup", up);
+                    })
                 }
             }
 
