@@ -1,38 +1,5 @@
 import {createElement, Text, Wrapper} from './createElements';
 
-/*
-class MyComponent {
-    constructor(config){
-        this.children = [];
-    }
-
-    setAttribute(name,value){       //attribute
-        this.root.setAttribute(name, value);
-    }
-
-    appendChild(child){
-        this.children.push(child);
-    }
-
-    render(){
-        return <article>
-            <header>I'm a header</header>
-            {this.slot}
-            <footer>I'm a footer</footer>
-        </article>
-    }
-
-    mountTo(parent){
-        this.slot = <div></div>
-        for(let child of this.children){
-            this.slot.appendChild(child);
-        }
-        this.render().mountTo(parent);
-    }
-
-    
-}
-*/
 
 class Carousel {
     constructor(config){
@@ -50,13 +17,49 @@ class Carousel {
     }
 
     render(){
-        return <div class="carousel">
-            { this.data.map(url => {
-                let element = <img src={url}/>;
-                element.addEventListener("dragstart", e => e.preventDefault());
-                return element;
-            })}
+        let children = this.data.map(url => {
+            let element = <img src={url}/>;
+            element.addEventListener("dragstart", e => e.preventDefault());
+            return element;
+        });
+        let root = <div class="carousel">
+            {children}
         </div>
+
+        let position = 0;
+
+        let nextPic = () =>{
+            let nextPosition = (position + 1) % this.data.length;
+
+            let current = children[position];       //避免操作DOM，以免造成不可预知的bug
+            let next = children[nextPosition];  
+
+            // 动画起始位置处不能有transition，需要去除
+            current.style.transition = `ease 0s`;     //也可改为none，都是去掉动画效果
+            next.style.transition = `ease 0s`;     
+
+
+            current.style.transform = `translateX(${-100 * position}%)`;        //动画起始位置
+            next.style.transform = `translateX(${100 -100 * nextPosition}%)`;
+
+
+            setTimeout(function(){                           
+                current.style.transition = "";  //="" means use css rule;   
+                next.style.transition = "";
+
+                current.style.transform = `translateX(${-100 -100 * position}%)`;   //动画结束位置
+                next.style.transform = `translateX(${-100 * nextPosition}%)`;
+
+                position = nextPosition;
+            },16)       //16毫秒一帧                        
+        
+            setTimeout(nextPic,3000);
+        }
+        setTimeout(nextPic,3000);
+
+
+
+        return root;
     }
 
     mountTo(parent){
@@ -66,12 +69,6 @@ class Carousel {
 }
 
 
-/*let component = <div id="a" cls="b" style="width:100px;height:100px;background:lightgreen;">
-    <div></div>
-    <div></div>
-    <div></div>
-</div>
-*/
 
 let component = <Carousel data={[
     "https://static001.geekbang.org/resource/image/bb/21/bb38fb7c1073eaee1755f81131f11d21.jpg",
