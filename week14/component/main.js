@@ -13,7 +13,7 @@ function createElement(Cls, attributes,...children){
 
 
     for(let name in attributes){
-        o[name] = attributes[name];
+        o.setAttribute(name, attributes[name]);
     }
 
     let visit = (children) => {
@@ -29,7 +29,7 @@ function createElement(Cls, attributes,...children){
             o.appendChild(child);
         }
     }
-    
+    visit(children);
 
     return o;
 }
@@ -111,21 +111,23 @@ class MyComponent {
 class Carousel {
     constructor(config){
         this.children = [];
+        this.attributes = new Map();
+        this.properties = new Map();
     }
 
-    // setAttribute(name,value){       //attribute
-    //     this.root.setAttribute(name, value);
-    // }
+    setAttribute(name,value){       //attribute
+        this[name] = value;
+    }
 
-    // appendChild(child){
-    //     this.children.push(child);
-    // }
+    appendChild(child){
+        this.children.push(child);
+    }
 
     render(){
-        return <div>
-            {this.data.map(url => {
-                let element = <img src={url} />;
-                element.addEventListener("dragstart",e => e.preventDefault());
+        return <div class="carousel">
+            { this.data.map(url => {
+                let element = <img src={url}/>;
+                element.addEventListener("dragstart", e => e.preventDefault());
                 return element;
             })}
         </div>
