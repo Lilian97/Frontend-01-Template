@@ -254,7 +254,6 @@ function endTagOpen(c){
 
 // in script
 function scriptData(c){
-    console.log("script data!!!!1");
     if(c == '<'){
         return scriptDatalessThanSign;
     } else{
