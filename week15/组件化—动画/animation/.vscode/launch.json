@@ -8,7 +8,7 @@
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Open xanimation.html",
-            "url": "http://localhost:8081",
+            "url": "http://localhost:8080",
             "file": "e:\\vue-project\\Frontend-01-Template\\week15\\组件化—动画\\animation\\xanimation.html"
         }
     ]
