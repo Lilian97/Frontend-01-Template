@@ -1,1 +1,9 @@
-# 每周总结可以写在这里
+# 十六周总结
+
+#### 手势
+
+- touch事件
+  - tap、flick、pan、press
+  - 
+- mouse事件
+

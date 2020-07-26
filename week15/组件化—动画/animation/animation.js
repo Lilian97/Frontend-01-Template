@@ -11,16 +11,16 @@ export class Timeline {
             for(let animation of animations){
                 
                 // t = animation.duration + animation.delay;
-                let {object, property, template, start, end, timingFunction, delay, duration, startTime } = animation;
+                let {object, property, template, start, end, timingFunction, delay, duration, addTime } = animation;
     
-                let progression = timingFunction((t - delay - startTime) / duration);    //0-1之间，表示进展
+                let progression = timingFunction((t - delay - addTime) / duration);    //0-1之间，表示进展
     
-                if(t > duration + delay + startTime){
+                if(t > duration + delay + addTime){
                     progression = 1;
                     animation.finished = true;
                 }
     
-                let value = start + progression * (end - start);
+                let value = animation.valueFromAnimation(progression);
     
                 object[property] = template(value);
             }
@@ -63,19 +63,19 @@ export class Timeline {
         this.pauseTime = null;
         this.tick();
     }
-    add(animation, startTime){
+    add(animation, addTime){
         this.animations.push(animation);
         animation.finished = false;
         if(this.state === "playing")
-            animation.startTime = startTime !== void 0 ? startTime : Date.now() - this.startTime;
+            animation.addTime = addTime !== void 0 ? addTime : Date.now() - this.startTime;
         else
-            animation.startTime = startTime !== void 0 ? startTime :  0;
+            animation.addTime = addTime !== void 0 ? addTime :  0;
             
     }
 }
 
 export class Animation {
-    constructor(object, property, template, start, end, duration, delay, timingFunction){
+    constructor(object, property, start, end, duration, delay, timingFunction, template){
         this.object = object;
         this.property = property;
         this.template = template;
@@ -84,5 +84,29 @@ export class Animation {
         this.duration = duration;
         this.delay = delay;
         this.timingFunction = timingFunction;      //timingFunction对应的是ease、linear、easeIn、easeOut
+    }
+    valueFromAnimation(progression){
+        return this.start + progression * (this.end - this.start);
+    }
+}
+
+export class ColorAnimation {
+    constructor(object, property, start, end, duration, delay, timingFunction, template){
+        this.object = object;
+        this.property = property;
+        this.template = template || (v => `rgb(${v.r}, ${v.g}, ${v.b}, ${v.a})`);
+        this.start = start;
+        this.end = end;
+        this.duration = duration;
+        this.delay = delay;
+        this.timingFunction = timingFunction;      //timingFunction对应的是ease、linear、easeIn、easeOut
+    }
+    valueFromAnimation(progression){
+        return {
+            r:this.start.r + progression * (this.end.r - this.start.r),
+            g:this.start.g + progression * (this.end.g - this.start.g),
+            b:this.start.b + progression * (this.end.b - this.start.b),
+            a:this.start.a + progression * (this.end.a - this.start.a)
+        }
     }
 }
